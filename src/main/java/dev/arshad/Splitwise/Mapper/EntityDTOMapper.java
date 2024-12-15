@@ -1,17 +1,11 @@
 package dev.arshad.Splitwise.Mapper;
 
-import dev.arshad.Splitwise.DTO.GroupResponseDTO;
-import dev.arshad.Splitwise.DTO.UserFriendResponseDTO;
-import dev.arshad.Splitwise.DTO.UserSignUpResponseDTO;
-import dev.arshad.Splitwise.Model.Group;
+import dev.arshad.Splitwise.DTO.UserLoginResponseDTO;
 import dev.arshad.Splitwise.Model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EntityDTOMapper {
-    public static UserSignUpResponseDTO toDTO(User user){
-        UserSignUpResponseDTO responseDTO=new UserSignUpResponseDTO();
+    public static UserLoginResponseDTO toDTO(User user){
+        UserLoginResponseDTO responseDTO=new UserLoginResponseDTO();
         responseDTO.setId(user.getId());
         responseDTO.setName(user.getName());
         responseDTO.setEmail(user.getEmail());

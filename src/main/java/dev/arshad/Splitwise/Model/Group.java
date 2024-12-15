@@ -19,7 +19,7 @@ public class Group extends BaseModel{
     private Double totalAmountSpent;
     @ManyToOne
     private User createdBy;
-    @ManyToMany
+    @ManyToMany(mappedBy = "groups")
    private List<User> members;
    @OneToMany
     private List<Expense> expenses;

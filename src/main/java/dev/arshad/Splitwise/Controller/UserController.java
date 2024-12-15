@@ -1,5 +1,6 @@
 package dev.arshad.Splitwise.Controller;
 
+import dev.arshad.Splitwise.DTO.UserLoginRequestDTO;
 import dev.arshad.Splitwise.DTO.UserSignUpRequestDTO;
 import dev.arshad.Splitwise.Exception.InvalidRegistrationDataException;
 import dev.arshad.Splitwise.Mapper.EntityDTOMapper;
@@ -17,7 +18,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/abc")
+    @GetMapping("/login")
+    public ResponseEntity Userlogin(@RequestBody UserLoginRequestDTO requestDTO){
+        User savedUser=userService.login(requestDTO.getEmail(),requestDTO.getPassword());
+        return ResponseEntity.ok(EntityDTOMapper.toDTO(savedUser));
+    }
+
+    @PostMapping("/signUp")
     public ResponseEntity signUpUser(@RequestBody UserSignUpRequestDTO requestDTO) throws Exception{
         validateUserSignUpDTO(requestDTO);
         User savedUser=userService.signUp(requestDTO.getName(),requestDTO.getEmail(),

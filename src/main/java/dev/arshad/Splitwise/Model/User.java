@@ -17,8 +17,7 @@ public class User extends BaseModel{
     private String password;
     @ManyToMany
     private List<Group> groups;
-//    @OneToMany
-//    private List<UserExpense> userExpenses;
+
     @ManyToMany
     private List<User> friends;
 
