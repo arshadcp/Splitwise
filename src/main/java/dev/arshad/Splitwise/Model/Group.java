@@ -24,6 +24,6 @@ public class Group extends BaseModel{
    @OneToMany
     private List<Expense> expenses;
    @OneToMany
-   private List<Transaction> settlementTransactions;
+   private List<SettlementTransaction> settlementSettlementTransactions;
 
 }

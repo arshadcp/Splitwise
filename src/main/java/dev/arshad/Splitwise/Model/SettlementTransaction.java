@@ -2,17 +2,14 @@ package dev.arshad.Splitwise.Model;
 
 import dev.arshad.Splitwise.Model.Enum.CurrencyType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Setter
 @Getter
 @Entity
-public class Transaction extends BaseModel {
+public class SettlementTransaction extends BaseModel {
     @ManyToOne
     private User borrower;
     @ManyToOne
@@ -20,4 +17,12 @@ public class Transaction extends BaseModel {
     private Double amount;
     private CurrencyType currencyType;
 
+    public SettlementTransaction(User borrower, User lender, Double amount) {
+        this.borrower = borrower;
+        this.lender = lender;
+        this.amount = amount;
+    }
+    public SettlementTransaction(){
+
+    }
 }
