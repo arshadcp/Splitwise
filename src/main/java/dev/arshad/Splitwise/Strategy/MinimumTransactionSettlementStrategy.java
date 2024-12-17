@@ -15,8 +15,8 @@ public class MinimumTransactionSettlementStrategy implements SettlementStrategy{
         HashMap<User, Double> expenseMap  = getOutstandingBalance( expenses);
 
 
-       Comparator<UserAmount> minheapComparator=Comparator.comparingDouble(UserAmount::getAmount);
-       Comparator<UserAmount> maxheapComparator=Comparator.comparingDouble(UserAmount::getAmount);
+       Comparator<UserAmount> minheapComparator=Comparator.comparingDouble(UserAmount::getAmount);//fetching getamount from UserAmount
+       Comparator<UserAmount> maxheapComparator=Comparator.comparingDouble(UserAmount::getAmount);// :: reference to a method we can also do (double amount1,double amount2)
 
          PriorityQueue<UserAmount> minPriority=new PriorityQueue<>(minheapComparator);
          PriorityQueue<UserAmount> maxPriority=new PriorityQueue<>(maxheapComparator);
@@ -33,13 +33,34 @@ public class MinimumTransactionSettlementStrategy implements SettlementStrategy{
            }
 
         }
-        List<SettlementTransaction> settlement=new ArrayList<>();
+        List<SettlementTransaction> settlementTransactions=new ArrayList<>();
         while(!minPriority.isEmpty() && !maxPriority.isEmpty()){
             UserAmount lender=maxPriority.poll();
             UserAmount borrower=minPriority.poll();
 
-        }
+            if(Math.abs(borrower.getAmount())>lender.getAmount()){
 
+                borrower.setAmount(borrower.getAmount()+ lender.getAmount());
+                minPriority.add(borrower);
+                SettlementTransaction settlement=new SettlementTransaction(borrower.getUser(),
+                        lender.getUser(), lender.getAmount());
+                settlementTransactions.add(settlement);
+            }
+             else if(Math.abs(borrower.getAmount())<lender.getAmount()){
+
+                lender.setAmount( lender.getAmount()+borrower.getAmount());
+                maxPriority.add(lender);
+                SettlementTransaction settlement=new SettlementTransaction(borrower.getUser(),
+                        lender.getUser(), borrower.getAmount());
+                settlementTransactions.add(settlement);
+            }
+             else{
+                 SettlementTransaction settlement=new SettlementTransaction(borrower.getUser(),lender.getUser(),lender.getAmount());
+                settlementTransactions.add(settlement);
+            }
+
+        }
+        return settlementTransactions;
     }
 
     public HashMap<User, Double> getOutstandingBalance(List<Expense> expenses){
@@ -67,5 +88,6 @@ public class MinimumTransactionSettlementStrategy implements SettlementStrategy{
                 }
             }
         }
+        return expenseMap;
     }
 }
